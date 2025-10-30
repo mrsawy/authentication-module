@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["jest", "@testing-library/jest-dom"]
+  },
+  "include": ["**/*.test.ts", "**/*.test.tsx"]
+}

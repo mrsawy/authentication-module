@@ -60,9 +60,6 @@ export function SignupForm({
         if (response.err.message.includes('phone')) {
           return setError("phone", { message: 'This phone number is already taken.' });
         }
-        if (response.err.message.includes('phone')) {
-          return setError("phone", { message: 'This phone number is already taken.' });
-        }
         return toast.error(response.err.message)
       }
 

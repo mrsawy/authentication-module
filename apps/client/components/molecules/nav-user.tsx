@@ -39,6 +39,7 @@ export function NavUser({
                 <Button
                     size="lg"
                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-muted-foreground hover:text-white"
+                    role="button"
                 >
                     <Avatar className="h-8 w-8 rounded-lg grayscale">
                         {/* <AvatarImage src={user.avatar} alt={user.name} /> */}

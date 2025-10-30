@@ -1,5 +1,5 @@
 
-import { SignupForm } from "../../__components/signup-form"
+import { SignupForm } from "../../../components/organs/signup-form"
 
 export default function SignupPage() {
     return (
