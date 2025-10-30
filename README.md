@@ -70,7 +70,7 @@ The test suite covers:
 import { render, screen, fireEvent } from '@testing-library/react'
 import { YourComponent } from '@/components/your-component'
 
-describe('YourComponent', () => {
+describe('some Component', () => {
   it('renders correctly', () => {
     render(<YourComponent />)
     expect(screen.getByText('Expected Text')).toBeInTheDocument()
@@ -131,47 +131,3 @@ The following are mocked globally in `jest.setup.js`:
 - Environment variables
 - Window.matchMedia
 
-## Coverage Goals
-
-- **Statements**: > 80%
-- **Branches**: > 75%
-- **Functions**: > 80%
-- **Lines**: > 80%
-
-## Debugging Tests
-
-### Run specific test file
-```bash
-npm test button.test.tsx
-```
-
-### Run tests matching pattern
-```bash
-npm test -- --testNamePattern="renders correctly"
-```
-
-### Debug in VS Code
-Add this to `.vscode/launch.json`:
-```json
-{
-  "type": "node",
-  "request": "launch",
-  "name": "Jest Debug",
-  "program": "${workspaceFolder}/node_modules/.bin/jest",
-  "args": ["--runInBand", "--no-cache"],
-  "console": "integratedTerminal"
-}
-```
-
-## CI/CD Integration
-
-Tests automatically run on:
-- Pull requests
-- Commits to main branch
-- Pre-commit hooks (recommended)
-
-## Additional Resources
-
-- [Jest Documentation](https://jestjs.io/docs/getting-started)
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Testing Best Practices](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
