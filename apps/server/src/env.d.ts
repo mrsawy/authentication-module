@@ -4,7 +4,7 @@ declare global {
             PORT?: number;
             MONGODB_URI_DEV: string;
             JWT_EXPIRES_IN?: StringValue;
-            SALT_ROUNDS: number;
+            SALT_ROUNDS: number | string;
             NODE_ENV: string;
             JWT_SECRET: string;
             NATS_URLS: string;

@@ -63,7 +63,7 @@ export function NavUser({
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                         <Avatar className="h-8 w-8 rounded-lg">
                             {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
-                            <AvatarFallback className="rounded-lg">{user.firstName.slice(0,2)}</AvatarFallback>
+                            <AvatarFallback className="rounded-lg">{user.firstName.slice(0, 2)}</AvatarFallback>
                         </Avatar>
                         <div className="grid flex-1 text-left text-sm leading-tight">
                             <span className="truncate font-medium">{user.firstName}</span>
@@ -93,7 +93,10 @@ export function NavUser({
                     async () => {
                         try {
                             useGeneralStore.setState({ generalIsLoading: true })
-                            await logout()
+                            const response = await logout()
+                            if (!response.success) {
+                                throw new Error(response.error)
+                            }
                         } catch (error) {
                             console.error({ error })
                         } finally {

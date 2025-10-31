@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "@/lib/utils/cn"cn"
+import { cn } from "@/lib/utils/cn"
 
 interface SwitchProps {
   id?: string;

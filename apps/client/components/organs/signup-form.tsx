@@ -49,23 +49,21 @@ export function SignupForm({
     try {
       useGeneralStore.setState({ generalIsLoading: true })
       const response = await signUpAction(data);
-      if ('err' in response) {
-        if (response.err.message.includes('username')) {
-          console.log({ response })
+      if (!response.success) {
+        const message = response.error;
+        if (message.includes('username')) {
           return setError("username", { message: 'This username is already taken.' });
         }
-        if (response.err.message.includes('email')) {
+        if (message.includes('email')) {
           return setError("email", { message: 'This email is already taken.' });
         }
-        if (response.err.message.includes('phone')) {
+        if (message.includes('phone')) {
           return setError("phone", { message: 'This phone number is already taken.' });
         }
-        return toast.error(response.err.message)
+        return toast.error(message)
       }
-
       router.push("/")
     } catch (error: any) {
-      console.log({ error })
       setError('root', { message: 'Something went wrong.' });
       toast.error(error.message ? error.message : 'Something went wrong.')
     } finally {
@@ -251,7 +249,7 @@ export function SignupForm({
             </div>
           </form>
           <div className="bg-muted relative hidden md:block rounded-2xl">
-            <Image src="/images/4.png" alt="auth" fill className=" object-cover rounded-2xl" />
+            <Image src="/images/uuu.jpg" alt="auth" fill className=" object-cover rounded-2xl" />
           </div>
         </CardContent>
       </Card>

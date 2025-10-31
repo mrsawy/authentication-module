@@ -3,9 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Provider from "./provider";
 import { getAuthUser } from "@/lib/actions/user.action";
-import Link from "next/link";
-import { NavUser } from "@/components/molecules/nav-user";
-import { ModeToggle } from "@/components/molecules/theme-switcher";
+import NavBar from "@/components/organs/nav-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,11 +33,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
-          <div className='flex flex-row justify-between px-24 py-5 container mx-auto'>
-            <Link href='/private' className='text-xl underline underline-offset-1'>Private Page</Link>
-            <NavUser user={user} />
-            <ModeToggle />
-          </div>
+          <NavBar user={user} />
           {children}
         </Provider>
       </body>

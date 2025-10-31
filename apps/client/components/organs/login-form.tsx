@@ -38,10 +38,15 @@ export function LoginForm({
   const onSubmit = async (data: LoginSchema) => {
     try {
       useGeneralStore.setState({ generalIsLoading: true })
-      await loginAction(data);
+      const res = await loginAction(data);
+      console.log({ res })
+      if (!res.success) {
+        throw new Error(res.error)
+      }
       router.push("/private")
     } catch (error: any) {
-      setError('root', { message: 'Something went wrong.' });
+      console.log({ error })
+      setError('root', { message: error.message ? error.message : 'Something went wrong.' });
       toast.error(error.message ? error.message : 'Something went wrong.')
     } finally {
       useGeneralStore.setState({ generalIsLoading: false })
@@ -135,7 +140,7 @@ export function LoginForm({
             </div>
           </form>
           <div className="bg-muted relative hidden md:block rounded-2xl">
-            <Image src="/images/4.png" alt="auth" fill className=" object-cover rounded-2xl" />
+            <Image src="/images/uuu.jpg" alt="auth" fill className=" object-cover rounded-2xl" />
           </div>
         </CardContent>
       </Card>

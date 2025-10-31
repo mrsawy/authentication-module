@@ -1,0 +1,32 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache libc6-compat
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+EXPOSE 3001
+
+CMD ["npm", "run", "dev"]
+
+# -----------------------------------
+
+# apps/server/Dockerfile.dev
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache libc6-compat python3 make g++
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:dev"]

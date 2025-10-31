@@ -2,9 +2,9 @@
 import useGeneralStore from '@/lib/store/generalStore';
 import styled from 'styled-components';
 
-const Loader = () => {
+const Loader = ({ forceLoading = false }: { forceLoading?: boolean }) => {
   const { generalIsLoading } = useGeneralStore()
-  if (!generalIsLoading) return null;
+  if (!forceLoading && !generalIsLoading) return null;
   return (
     <div className="fixed top-0 left-0 w-full flex justify-center items-center h-full  bg-black/80 z-99999">
       <div>

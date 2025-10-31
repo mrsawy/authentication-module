@@ -53,6 +53,7 @@ export async function createNatsRequest<T>(subject: string, data: T): Promise<an
     const response = await request<any>(natsClient, subject, JSON.stringify(payload));
 
     if ('err' in response) {
+        // console.log({ response })
         throw new Error((response as { err: NatsError }).err.message);
     }
 

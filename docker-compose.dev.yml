@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: app-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    volumes:
+      - mongodb_data_dev:/data/db
+    networks:
+      - app-network-dev
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: app-redis-dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    networks:
+      - app-network-dev
+
+  # NATS Message Broker
+  nats:
+    image: nats:2.10-alpine
+    container_name: app-nats-dev
+    restart: unless-stopped
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command: ["-js", "-m", "8222"]
+    networks:
+      - app-network-dev
+
+  # NestJS Backend Server (Development)
+  server:
+    build:
+      context: ./apps/server
+      dockerfile: Dockerfile.dev
+    container_name: app-server-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      MONGODB_URI_DEV: mongodb://admin:password123@mongodb:27017/app-db?authSource=admin
+      JWT_SECRET: dev-jwt-secret-key
+      JWT_EXPIRES_IN: 7d
+      SALT_ROUNDS: 10
+      NATS_URLS: nats://nats:4222
+    depends_on:
+      - mongodb
+      - nats
+    networks:
+      - app-network-dev
+    volumes:
+      - ./apps/server:/app
+      - /app/node_modules
+      - /app/.pnpm-store
+    command: pnpm run start:dev
+
+  # Next.js Frontend Client (Development)
+  client:
+    build:
+      context: ./apps/client
+      dockerfile: Dockerfile.dev
+    container_name: app-client-dev
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      AUTH_COOKIE_NAME: auth_token
+      NATS_URLS: nats://nats:4222
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - server
+      - redis
+      - nats
+    networks:
+      - app-network-dev
+    volumes:
+      - ./apps/client:/app
+      - /app/node_modules
+      - /app/.next
+      - /app/.pnpm-store
+    command: pnpm run dev
+
+networks:
+  app-network-dev:
+    driver: bridge
+
+volumes:
+  mongodb_data_dev:
+  redis_data_dev:
