@@ -62,6 +62,9 @@ chmod +x setup.sh
 ```
 
 **Or manually:**
+
+1. **install pnpm and generate lock files**
+
 ```bash
 # Install pnpm globally if not installed
 npm install -g pnpm
@@ -69,61 +72,6 @@ npm install -g pnpm
 # Generate lock files
 cd apps/server && pnpm install && cd ../..
 cd apps/client && pnpm install && cd ../..
-```
-
-### Production Mode
-
-1. **Clone the repository**
-```bash
-git clone <repository-url>
-cd <project-directory>
-```
-
-2. **Build and run all services**
-```bash
-docker-compose up -d
-```
-
-This will start:
-- MongoDB on port 27017
-- Redis on port 6379
-- NATS on ports 4222 (client) and 8222 (monitoring)
-- Backend server on port 3000
-- Frontend client on port 3001
-
-3. **Access the applications**
-- Frontend: http://localhost:3001
-- Backend API: http://localhost:3000
-- API Documentation: http://localhost:3000/api/docs
-- NATS Monitoring: http://localhost:8222
-
-4. **Stop services**
-```bash
-docker-compose down
-```
-
-5. **Remove volumes (clean slate)**
-```bash
-docker-compose down -v
-```
-
-
-## 💻 Local Development (without Docker)
-
-### Prerequisites Setup
-
-1. **Install dependencies**
-```bash
-# Install root dependencies (if any)
-npm install
-
-# Install client dependencies
-cd apps/client
-npm install
-
-# Install server dependencies
-cd ../server
-npm install
 ```
 
 2. **Set up environment variables**
@@ -199,6 +147,45 @@ pnpm run test:watch
 pnpm run test:cov
 
 ```
+
+### Production Mode
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd <project-directory>
+```
+
+2. **Build and run all services**
+```bash
+docker-compose up -d
+```
+
+This will start:
+- MongoDB on port 27017
+- Redis on port 6379
+- NATS on ports 4222 (client) and 8222 (monitoring)
+- Backend server on port 3000
+- Frontend client on port 3001
+
+3. **Access the applications**
+- Frontend: http://localhost:3001
+- Backend API: http://localhost:3000
+- API Documentation: http://localhost:3000/api/docs
+- NATS Monitoring: http://localhost:8222
+
+4. **Stop services**
+```bash
+docker-compose down
+```
+
+5. **Remove volumes (clean slate)**
+```bash
+docker-compose down -v
+```
+
+
+
 
 ## 📁 Project Structure
 
