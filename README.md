@@ -1,4 +1,4 @@
-# Full-Stack Authentication Application
+# Full-Stack Authentication Application (Nextjs , Nestjs , Nats microservices)
 
 A production-ready full-stack application featuring user authentication, real-time messaging, and microservices architecture.
 
@@ -58,7 +58,7 @@ chmod +x setup.sh
 
 **On Windows (PowerShell):**
 ```powershell
-.\setup.ps1
+.\setup.bat
 ```
 
 **Or manually:**
@@ -107,13 +107,6 @@ docker-compose down
 docker-compose down -v
 ```
 
-### Development Mode
-
-For hot-reloading during development:
-
-```bash
-docker-compose -f docker-compose.dev.yml up
-```
 
 ## 💻 Local Development (without Docker)
 
@@ -166,13 +159,13 @@ docker-compose up mongodb redis nats -d
 Terminal 1 - Backend:
 ```bash
 cd apps/server
-npm run start:dev
+pnpm start:dev
 ```
 
 Terminal 2 - Frontend:
 ```bash
 cd apps/client
-npm run dev
+pnpm dev
 ```
 
 ## 🧪 Testing
@@ -182,16 +175,14 @@ npm run dev
 cd apps/client
 
 # Run all tests
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 
 # Generate coverage report
-npm run test:coverage
+pnpm run test:coverage
 
-# Run tests in CI mode
-npm run test:ci
 ```
 
 ### Server Tests
@@ -199,16 +190,14 @@ npm run test:ci
 cd apps/server
 
 # Run unit tests
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 
 # Generate coverage report
-npm run test:cov
+pnpm run test:cov
 
-# Run e2e tests
-npm run test:e2e
 ```
 
 ## 📁 Project Structure
@@ -315,46 +304,6 @@ Component structure follows atomic design:
 - Swagger/OpenAPI automatic documentation
 - Interactive API explorer
 
-## 🚢 Deployment
-
-### Using Docker Compose (Recommended)
-
-```bash
-# Build and start all services
-docker-compose up -d --build
-
-# View logs
-docker-compose logs -f
-
-# Scale services
-docker-compose up -d --scale server=3
-```
-
-### Manual Deployment
-
-1. **Build applications**
-```bash
-# Build server
-cd apps/server
-npm run build
-
-# Build client
-cd apps/client
-npm run build
-```
-
-2. **Set production environment variables**
-
-3. **Start services**
-```bash
-# Start server
-cd apps/server
-npm run start:prod
-
-# Start client
-cd apps/client
-npm start
-```
 
 ## 🔒 Security Considerations
 
@@ -366,103 +315,4 @@ npm start
 - Input validation on both client and server
 - Protected routes with authentication guards
 
-## 🐛 Troubleshooting
 
-### Docker Issues
-
-**Services not starting:**
-```bash
-# Check service logs
-docker-compose logs <service-name>
-
-# Rebuild services
-docker-compose up -d --build --force-recreate
-```
-
-**Port conflicts:**
-```bash
-# Check if ports are in use
-lsof -i :3000
-lsof -i :3001
-lsof -i :27017
-
-# Modify ports in docker-compose.yml if needed
-```
-
-### Database Connection Issues
-
-```bash
-# Check MongoDB is running
-docker-compose ps mongodb
-
-# Access MongoDB shell
-docker exec -it app-mongodb mongosh -u admin -p password123
-```
-
-### NATS Connection Issues
-
-```bash
-# Check NATS health
-curl http://localhost:8222/healthz
-
-# View NATS connections
-curl http://localhost:8222/connz
-```
-
-## 📝 Environment Variables
-
-### Server (.env)
-```env
-NODE_ENV=production|development
-PORT=3000
-MONGODB_URI_DEV=mongodb://admin:password123@mongodb:27017/app-db?authSource=admin
-JWT_SECRET=your-secret-key
-JWT_EXPIRES_IN=7d
-SALT_ROUNDS=10
-NATS_URLS=nats://nats:4222
-```
-
-### Client (.env.local)
-```env
-NODE_ENV=production|development
-PORT=3001
-AUTH_COOKIE_NAME=auth_token
-NATS_URLS=nats://nats:4222
-REDIS_URL=redis://redis:6379
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👥 Support
-
-For issues and questions:
-- Create an issue in the repository
-- Check existing documentation
-- Review API documentation at `/api/docs`
-
-## 🎯 Future Enhancements
-
-- [ ] Email verification
-- [ ] Password reset functionality
-- [ ] OAuth integration (Google, GitHub)
-- [ ] Role-based access control (RBAC)
-- [ ] Rate limiting
-- [ ] WebSocket support for real-time features
-- [ ] CI/CD pipeline
-- [ ] Kubernetes deployment configs
-- [ ] Monitoring and logging (Prometheus, Grafana)
-- [ ] Performance optimization
-
----
-
-**Happy Coding! 🚀**
