@@ -1,82 +1,102 @@
-# Full-Stack Authentication Application (Nextjs , Nestjs , Nats microservices)
+# Full-Stack Authentication Application
 
-A production-ready full-stack application featuring user authentication, real-time messaging, and microservices architecture.
+A production-ready authentication system built with Next.js, NestJS, and NATS microservices architecture.
+
+## 🎯 Quick Start
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd <project-directory>
+
+# Start everything with one command
+docker-compose up -d
+```
+
+That's it! The entire application stack will be up and running:
+- 🎨 Frontend: http://localhost:3001
+- 🔧 Backend API: http://localhost:3000
+- 📚 API Documentation: http://localhost:3000/api/docs
+- 📊 NATS Monitoring: http://localhost:8222
+
+## 📸 Screenshots
+
+### Signup Page (Dark Mode)
+![Signup Dark Mode](./screenshots/signup-dark.png)
+
+### Login Page (Light Mode)
+![Login Light Mode](./screenshots/login-light.png)
 
 ## 🏗️ Architecture
 
-This monorepo contains:
-
-- **Frontend (Client)**: Next.js 16 with React 19, TypeScript, Tailwind CSS
-- **Backend (Server)**: NestJS with TypeScript, MongoDB, JWT authentication
-- **Message Broker**: NATS for microservices communication
-- **Cache Layer**: Redis for session management
+**Monorepo Structure:**
+- **Frontend**: Next.js 16 + React 19 + TypeScript + Tailwind CSS
+- **Backend**: NestJS 11 + MongoDB + JWT Authentication
+- **Microservices**: NATS message broker for service communication
+- **Cache**: Redis for session management
 - **Database**: MongoDB for data persistence
 
-## 🚀 Tech Stack
+**All services are containerized and orchestrated with Docker Compose.**
 
-### Frontend (apps/client)
-- **Framework**: Next.js 16 (App Router)
-- **UI Library**: React 19
-- **Styling**: Tailwind CSS v4, shadcn/ui components
-- **State Management**: Zustand
-- **Form Handling**: React Hook Form with Yup validation
-- **HTTP Client**: Native fetch API
-- **Testing**: Jest, React Testing Library
+## ✨ Key Features
 
-### Backend (apps/server)
-- **Framework**: NestJS 11
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT with bcrypt
-- **Message Queue**: NATS microservices
-- **API Documentation**: Swagger/OpenAPI
-- **Testing**: Jest, Supertest
-- **Validation**: class-validator, class-transformer
-
-### Infrastructure
-- **Message Broker**: NATS 2.10
-- **Cache**: Redis 7
-- **Database**: MongoDB 7
-- **Container**: Docker & Docker Compose
+- 🔐 Complete JWT-based authentication (register, login, protected routes)
+- 🎨 Modern UI with dark/light mode support
+- 🚀 Microservices architecture with NATS
+- ⚡ Redis caching for optimal performance
+- 📱 Responsive design with Tailwind CSS v4
+- 🧪 Comprehensive test coverage
+- 📖 Auto-generated API documentation (Swagger/OpenAPI)
+- 🔒 Production-ready security (HTTP-only cookies, bcrypt hashing, CORS)
 
 ## 📋 Prerequisites
 
-- Node.js 20+
-- Docker and Docker Compose
-- pnpm (will be installed automatically if not present)
+- Docker & Docker Compose
+- Node.js 20+ (for local development only)
+- pnpm (for local development only)
 
-## 🐳 Docker Setup
+## 🧪 Testing
 
-### First Time Setup
+### Run Tests Locally
 
-Before running Docker, you need to generate the lock files:
-
-**On Linux/Mac:**
+**Backend Tests:**
 ```bash
-chmod +x setup.sh
-./setup.sh
+cd apps/server
+pnpm install
+pnpm test              # Unit tests
+pnpm test:watch        # Watch mode
+pnpm test:cov          # Coverage report
 ```
 
-**On Windows (PowerShell):**
-```powershell
-.\setup.bat
-```
-
-**Or manually:**
-
-1. **install pnpm and generate lock files**
-
+**Frontend Tests:**
 ```bash
-# Install pnpm globally if not installed
-npm install -g pnpm
-
-# Generate lock files
-cd apps/server && pnpm install && cd ../..
-cd apps/client && pnpm install && cd ../..
+cd apps/client
+pnpm install
+pnpm test              # All tests
+pnpm test:watch        # Watch mode
+pnpm test:coverage     # Coverage report
 ```
 
-2. **Set up environment variables**
+## 📚 Documentation
 
-Create `.env` file in `apps/server`:
+- **API Documentation**: http://localhost:3000/api/docs (Interactive Swagger UI)
+- **Available Endpoints**:
+  - `POST /auth/register` - Register new user
+  - `POST /auth/login` - Login user
+  - `GET /user/me` - Get current user (authenticated)
+
+## 🛠️ Local Development (Without Docker)
+
+If you prefer to run services locally:
+
+**1. Start Infrastructure:**
+```bash
+docker-compose up mongodb redis nats -d
+```
+
+**2. Configure Environment:**
+
+`apps/server/.env`:
 ```env
 NODE_ENV=development
 PORT=3000
@@ -87,7 +107,7 @@ SALT_ROUNDS=10
 NATS_URLS=nats://localhost:4222
 ```
 
-Create `.env.local` file in `apps/client`:
+`apps/client/.env.local`:
 ```env
 NODE_ENV=development
 PORT=3001
@@ -96,210 +116,87 @@ NATS_URLS=nats://localhost:4222
 REDIS_URL=redis://localhost:6379
 ```
 
-3. **Start infrastructure services**
+**3. Run Applications:**
 ```bash
-# Using Docker for infrastructure only
-docker-compose up mongodb redis nats -d
+# Terminal 1 - Backend
+cd apps/server && pnpm install && pnpm start:dev
+
+# Terminal 2 - Frontend
+cd apps/client && pnpm install && pnpm dev
 ```
-
-4. **Run the applications**
-
-Terminal 1 - Backend:
-```bash
-cd apps/server
-pnpm start:dev
-```
-
-Terminal 2 - Frontend:
-```bash
-cd apps/client
-pnpm dev
-```
-
-## 🧪 Testing
-
-### Client Tests
-```bash
-cd apps/client
-
-# Run all tests
-pnpm test
-
-# Run tests in watch mode
-pnpm run test:watch
-
-# Generate coverage report
-pnpm run test:coverage
-
-```
-
-### Server Tests
-```bash
-cd apps/server
-
-# Run unit tests
-pnpm test
-
-# Run tests in watch mode
-pnpm run test:watch
-
-# Generate coverage report
-pnpm run test:cov
-
-```
-
-### Production Mode
-
-1. **Clone the repository**
-```bash
-git clone <repository-url>
-cd <project-directory>
-```
-
-2. **Build and run all services**
-```bash
-docker-compose up -d
-```
-
-This will start:
-- MongoDB on port 27017
-- Redis on port 6379
-- NATS on ports 4222 (client) and 8222 (monitoring)
-- Backend server on port 3000
-- Frontend client on port 3001
-
-3. **Access the applications**
-- Frontend: http://localhost:3001
-- Backend API: http://localhost:3000
-- API Documentation: http://localhost:3000/api/docs
-- NATS Monitoring: http://localhost:8222
-
-4. **Stop services**
-```bash
-docker-compose down
-```
-
-5. **Remove volumes (clean slate)**
-```bash
-docker-compose down -v
-```
-
-
-
 
 ## 📁 Project Structure
 
 ```
 .
 ├── apps/
-│   ├── client/                 # Next.js frontend application
-│   │   ├── __tests__/         # Test files
-│   │   ├── app/               # Next.js app directory
-│   │   ├── components/        # React components
-│   │   │   ├── atoms/         # Basic UI components
-│   │   │   ├── molecules/     # Composite components
-│   │   │   └── organs/        # Complex components
-│   │   ├── lib/               # Utilities and helpers
-│   │   │   ├── actions/       # Server actions
-│   │   │   ├── schema/        # Validation schemas
-│   │   │   ├── store/         # State management
-│   │   │   ├── types/         # TypeScript types
-│   │   │   └── utils/         # Helper functions
-│   │   ├── public/            # Static assets
-│   │   ├── Dockerfile         # Production Dockerfile
-│   │   ├── Dockerfile.dev     # Development Dockerfile
-│   │   └── package.json
+│   ├── client/              # Next.js frontend
+│   │   ├── app/            # App router pages
+│   │   ├── components/     # React components (atomic design)
+│   │   ├── lib/            # Utils, types, state management
+│   │   └── __tests__/      # Test files
 │   │
-│   └── server/                # NestJS backend application
+│   └── server/              # NestJS backend
 │       ├── src/
-│       │   ├── auth/          # Authentication module
-│       │   ├── user/          # User management module
-│       │   └── utils/         # Utility functions
-│       ├── test/              # E2E tests
-│       ├── Dockerfile         # Production Dockerfile
-│       ├── Dockerfile.dev     # Development Dockerfile
-│       └── package.json
+│       │   ├── auth/       # Authentication module
+│       │   ├── user/       # User management
+│       │   └── utils/      # Helpers
+│       └── test/           # E2E tests
 │
-├── docker-compose.yml         # Production Docker Compose
-├── docker-compose.dev.yml     # Development Docker Compose
-└── README.md                  # This file
+├── docker-compose.yml       # Production setup
+└── docker-compose.dev.yml   # Development setup
 ```
-
-## 🔌 API Endpoints
-
-### Authentication
-- `POST /auth/register` - Register new user
-- `POST /auth/login` - Login user
-
-### User
-- `GET /user/me` - Get current user (requires authentication)
-
-Full API documentation available at: http://localhost:3000/api/docs
 
 ## 🔐 Authentication Flow
 
-1. User registers or logs in
-2. Server validates credentials and generates JWT token
-3. Token stored in HTTP-only cookie (client-side)
-4. Token cached in Redis with user data
-5. Subsequent requests include token for authentication
-6. Server validates token and retrieves user from cache/database
+1. User registers/logs in → Server validates credentials
+2. JWT token generated and stored in HTTP-only cookie
+3. Token cached in Redis with user data
+4. Subsequent requests include token for authentication
+5. Middleware validates token and retrieves user data
 
 ## 🌐 Microservices Communication
 
-The application uses NATS for inter-service communication:
+NATS message patterns:
+- `auth.register` - User registration
+- `auth.login` - User authentication  
+- `user.getOwnData` - Fetch user profile
 
-- **Message Patterns**:
-  - `auth.register` - User registration
-  - `auth.login` - User login
-  - `user.getOwnData` - Fetch authenticated user data
+## 🔒 Security Features
 
-- **HTTP to NATS Bridge**: The Next.js middleware can call NestJS services via NATS
+- ✅ JWT tokens with configurable expiration
+- ✅ bcrypt password hashing
+- ✅ HTTP-only cookies (XSS protection)
+- ✅ CORS configuration
+- ✅ Environment-based secrets
+- ✅ Input validation (client + server)
+- ✅ Protected API routes with guards
 
-## 🎨 UI Components
+## 🧹 Cleanup
 
-The client uses a custom component library built on:
-- Radix UI primitives
-- Tailwind CSS for styling
-- Lucide React for icons
-- shadcn/ui design patterns
+```bash
+# Stop all services
+docker-compose down
 
-Component structure follows atomic design:
-- **Atoms**: Basic components (Button, Input, Label)
-- **Molecules**: Composite components (Combobox, Nav)
-- **Organisms**: Complex components (LoginForm, SignupForm)
+# Remove all data (fresh start)
+docker-compose down -v
+```
 
-## 📊 State Management
+## 🛠️ Tech Stack Summary
 
-- **Global State**: Zustand for app-wide state (loading states)
-- **Form State**: React Hook Form for form management
-- **Server State**: React Query patterns for data fetching
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS v4 |
+| Backend | NestJS 11, MongoDB, Mongoose |
+| Authentication | JWT, bcrypt |
+| Microservices | NATS 2.10 |
+| Cache | Redis 7 |
+| Database | MongoDB 7 |
+| Testing | Jest, React Testing Library, Supertest |
+| UI Components | shadcn/ui, Radix UI, Lucide Icons |
+| State Management | Zustand, React Hook Form |
+| Validation | Yup, class-validator |
 
-## 🔧 Development Tools
+---
 
-### Code Quality
-- ESLint for linting
-- Prettier for code formatting
-- TypeScript for type safety
-
-### Testing
-- Jest for unit testing
-- React Testing Library for component testing
-- Supertest for API testing
-
-### API Documentation
-- Swagger/OpenAPI automatic documentation
-- Interactive API explorer
-
-
-## 🔒 Security Considerations
-
-- JWT tokens with configurable expiration
-- Password hashing with bcrypt
-- HTTP-only cookies for token storage
-- CORS configuration
-- Environment-based secrets
-- Input validation on both client and server
-- Protected routes with authentication guards
-
-
+**Ready to build? Just run `docker-compose up` and start developing! 🚀**

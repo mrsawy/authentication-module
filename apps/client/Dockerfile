@@ -32,7 +32,6 @@ COPY apps/client/public ./apps/client/public
 COPY apps/client/app ./apps/client/app
 COPY apps/client/components ./apps/client/components
 COPY apps/client/lib ./apps/client/lib
-COPY apps/client/.env ./apps/client/
 COPY apps/client/middleware.ts ./apps/client/
 
 # Set working directory to client
