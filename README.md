@@ -22,7 +22,6 @@ That's it! The entire application stack will be up and running:
 ## 📸 Screenshots
 
 ### Signup Page (Dark Mode)
-![Signup Dark Mode](./screenshots/signup-dark.png)
 ![Register Dark Mode](https://drive.google.com/uc?export=view&id=152EG76d3eD1JktDNOzrGLNy1osV6E-hv)
 
 ### Login Page (Light Mode)
