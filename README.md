@@ -23,9 +23,10 @@ That's it! The entire application stack will be up and running:
 
 ### Signup Page (Dark Mode)
 ![Signup Dark Mode](./screenshots/signup-dark.png)
+![Register Dark Mode](https://drive.google.com/uc?export=view&id=152EG76d3eD1JktDNOzrGLNy1osV6E-hv)
 
 ### Login Page (Light Mode)
-![Login Light Mode](./screenshots/login-light.png)
+![Login Light Mode](https://drive.google.com/uc?export=view&id=1KWE3YAwsv8wquVtaSgbQ48I-d70M0B0h)
 
 ## 🏗️ Architecture
 
@@ -200,3 +201,4 @@ docker-compose down -v
 ---
 
 **Ready to build? Just run `docker-compose up` and start developing! 🚀**
+
